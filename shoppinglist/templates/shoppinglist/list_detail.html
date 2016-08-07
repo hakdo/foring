@@ -1,0 +1,33 @@
+{% extends 'shoppinglist/base.html' %}
+
+{% block content %}
+<h1> {{ list.shortname }}</h1>
+<p style="font-size:0.8em"> {{ list.created_date|date:'d. b. Y' }}</p>
+
+<script>
+
+</script>
+<ul class="list-group">
+<form>
+{% for item in items %}
+<li class="list-group-item">
+<input type="checkbox" value="{{ item }}" name="current_list.shortname-{{item}}" >    {{ item }} </input>
+</li>
+{% endfor %}
+</form>
+
+</ul>
+<div class="btn-group btn-group-justified" role="group">
+<div class="btn-group" role="group">
+<a class="btn btn-primary" role="button"  href="{% url 'myshoppinglists' %}" >
+  Oversikt
+</a>
+</div>
+<div class="btn-group" role="group">
+<form method="POST" class="form-inline">{% csrf_token %}
+  <button type="submit" class="btn btn-default" value="archive">Ferdig med liste!</button>
+</form>
+</div>
+</div>
+
+{% endblock %}

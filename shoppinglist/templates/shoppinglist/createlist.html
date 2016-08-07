@@ -1,0 +1,16 @@
+{% extends 'shoppinglist/base.html' %}
+
+{% block content %}
+<h1>Ny handleliste</h1>
+<form method="POST">{% csrf_token %}
+<table class="table">
+{{ form.as_table }}
+<td><!-- Empty first column --></td>
+<td>
+  <button type="submit" class="btn btn-default">
+    Lagre
+  </button>
+</td>
+</table>
+</form>
+{% endblock %}

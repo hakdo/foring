@@ -1,0 +1,13 @@
+{% extends 'shoppinglist/base.html' %}
+
+{% block content %}
+<h1>Mine handlelister</h1>
+<ul class="list-group">
+{% for list_name in lists %}
+<li class="list-group-item" style="font-size:0.8em;">
+<h2><a href="{% url 'listdetail' pk=list_name.pk %}">{{ list_name.shortname }}</a></h2>
+{{ list_name.created_date |date:'d. b. Y'}}</li>
+</ul>
+{% endfor %}
+
+{% endblock %}
