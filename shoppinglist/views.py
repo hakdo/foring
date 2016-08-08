@@ -18,12 +18,28 @@ def createlist(request):
             new_shoppinglist = form.save(commit=False)
             new_shoppinglist.owner = request.user.username
             new_shoppinglist = form.save()
-            return redirect('myshoppinglists')
+            return redirect('listdetail', pk=new_shoppinglist.pk)
         else:
             return HttpResponse('Error')
     else:
         form = SimpleListForm()
         return render(request, 'shoppinglist/createlist.html', {'form': form})
+
+@login_required(login_url='/login/')
+def list_edit(request,pk):
+    current_list = get_object_or_404(SimpleList, pk=pk)
+    if request.method == "POST":
+        form = SimpleListForm(request.POST, instance=current_list)
+        if form.is_valid():
+            # Commit = False in order to process data later if needed
+            current_list = form.save(commit=False)
+            current_list.save()
+            return redirect('listdetail', pk = current_list.pk)
+    else:
+        form = SimpleListForm(instance=current_list)
+    return render(request, 'shoppinglist/createlist.html', {'form': form})
+
+
 
 
 @login_required(login_url='/login/')
@@ -88,6 +104,7 @@ def newuser(request):
             try:
                 user = User.objects.create_user(username,email,password)
                 user.save()
+                login(request,user)
                 return redirect('welcome')
             except:
                 return HttpResponse('Noe gikk feil. Prøv igjen med et annet brukernavn/passord.')

@@ -1,7 +1,10 @@
 {% extends 'shoppinglist/base.html' %}
 
 {% block content %}
-<h1> {{ list.shortname }}</h1>
+
+<h1> {{ list.shortname }}
+<a class="btn btn-default" style="float:right;" href="{% url 'list_edit' pk=list.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+</h1>
 <p style="font-size:0.8em"> {{ list.created_date|date:'d. b. Y' }}</p>
 
 <ul class="list-group">

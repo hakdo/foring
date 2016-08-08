@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^logout/$',views.userlogout,name='userlogout'),
     url(r'^registernew/$',views.newuser,name='newuser'),
     url(r'^welcome/$',views.welcome,name='welcome'),
+    url(r'^list/(?P<pk>\d+)/edit/$',views.list_edit,name='list_edit'),
 ]
