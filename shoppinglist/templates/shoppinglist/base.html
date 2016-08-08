@@ -103,7 +103,8 @@ div.cookiesplain:hover {
         <li {% ifequal request.path "/" %}class="active"{% endifequal %}><a href="{%url 'init' %}">Intro</a></li>
         <li {% ifequal request.path "/new/" %}class="active"{% endifequal %}><a href="{% url 'createlist' %}">Ny handleliste</a></li>
         <li {% ifequal request.path "/myshoppinglists/" %}class="active"{% endifequal %}><a href="{% url 'myshoppinglists' %}">Mine handlelister</a></li>
-        <li {% ifequal request.path "/yourshoppinglists/" %}class="active"{% endifequal %}><a href="{% url 'yourshoppinglists' %}">Delte handlelister</a></li>
+        <li {% ifequal request.path "/yourshoppinglists/" %}class="active"{% endifequal %}><a href="{% url 'yourshoppinglists' %}">Delt med meg</a></li>
+        <li {% ifequal request.path "/qa/" %}class="active"{% endifequal %}><a href="{% url 'qa' %}">Q&ampA</a></li>
                 {% if not user.is_authenticated %}
         <li {% ifequal request.path "/registernew/" %}class="active"{% endifequal %}><a href="{% url 'newuser' %}">Opprett ny bruker</a></li>
         {% endif %}

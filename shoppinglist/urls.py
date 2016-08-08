@@ -18,6 +18,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$',views.init,name='init' ),
+    url(r'^qa/$',views.qa,name='qa' ),
     url(r'^new/$',views.createlist,name='createlist'),
     url(r'^myshoppinglists/$',views.myshoppinglists,name='myshoppinglists'),
     url(r'^yourshoppinglists/$',views.yourshoppinglists,name='yourshoppinglists'),

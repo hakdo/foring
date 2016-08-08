@@ -10,6 +10,10 @@ import json
 def init(request):
     return render(request,'shoppinglist/init.html',{})
 
+def qa(request):
+    return render(request,'shoppinglist/qa.html',{})
+
+
 @login_required(login_url='/login/')
 def createlist(request):
     if request.method=='POST':
@@ -45,8 +49,9 @@ def list_edit(request,pk):
 @login_required(login_url='/login/')
 def myshoppinglists(request):
     shopping_lists = SimpleList.objects.filter(finished=False, owner=request.user.username)
-    return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists})
+    return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists, 'ownership': 'private'})
 
+@login_required(login_url='/login/')
 def yourshoppinglists(request):
     shopping_lists = SimpleList.objects.filter(finished=False, sharedwith=request.user.username)
     return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists, 'ownership': 'shared'})
