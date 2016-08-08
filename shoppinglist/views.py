@@ -44,9 +44,12 @@ def list_edit(request,pk):
 
 @login_required(login_url='/login/')
 def myshoppinglists(request):
-    # Users not included yet, getting all lists
     shopping_lists = SimpleList.objects.filter(finished=False, owner=request.user.username)
     return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists})
+
+def yourshoppinglists(request):
+    shopping_lists = SimpleList.objects.filter(finished=False, sharedwith=request.user.username)
+    return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists, 'ownership': 'shared'})
 
 @login_required(login_url='/login/')
 def list_detail(request, pk):
@@ -65,7 +68,7 @@ def list_detail(request, pk):
         current_list.contents = '\r\n'.join(shopping_list)
         if len(shopping_list)==0:
             current_list.finished = True
-        current_list.save() 
+        current_list.save()
         return redirect('myshoppinglists')
     else:
         list_items=current_list.contents.split('\n')

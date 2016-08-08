@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^$',views.init,name='init' ),
     url(r'^new/$',views.createlist,name='createlist'),
     url(r'^myshoppinglists/$',views.myshoppinglists,name='myshoppinglists'),
+    url(r'^yourshoppinglists/$',views.yourshoppinglists,name='yourshoppinglists'),
     url(r'^myshoppinglists/detail/(?P<pk>\d+)/$',views.list_detail,name='listdetail'),
     url(r'^login/$',views.userlogin,name='userlogin'),
     url(r'^logout/$',views.userlogout,name='userlogout'),
