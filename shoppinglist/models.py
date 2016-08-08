@@ -10,6 +10,7 @@ class SimpleList(models.Model):
     owner = models.CharField(max_length=200,default='dummy')
     contents = models.TextField()
     finished = models.BooleanField(default=False)
+    contentjson = models.TextField(blank=True)
 
     def __str__(self):
         return self.shortname

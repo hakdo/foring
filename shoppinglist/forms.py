@@ -1,5 +1,6 @@
 from django import forms
 from . models import SimpleList
+import json
 
 class SimpleListForm(forms.ModelForm):
     class Meta:
@@ -18,3 +19,5 @@ class registernewForm(forms.Form):
     username=forms.CharField(max_length=20,label='Ønsket brukernavn')
     email=forms.EmailField(label='E-post')
     password=forms.CharField(max_length=30,widget=forms.PasswordInput(),label='Passord')
+
+
