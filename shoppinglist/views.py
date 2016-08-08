@@ -30,6 +30,7 @@ def myshoppinglists(request):
     shopping_lists = SimpleList.objects.filter(finished=False, owner=request.user.username)
     return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists})
 
+@login_required(login_url='/login/')
 def list_detail(request, pk):
     current_list = get_object_or_404(SimpleList, pk=pk)
     if request.method =='POST':
