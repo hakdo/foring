@@ -25,25 +25,6 @@ def createlist(request):
         form = SimpleListForm()
         return render(request, 'shoppinglist/createlist.html', {'form': form})
 
-@login_required(login_url='/login/')
-def createlistjson(request):
-    if request.method=='POST':
-        form = SimpleListForm(request.POST)
-        if form.is_valid():
-            new_shoppinglist = form.save(commit=False)
-            out = (new_shoppinglist.contents.split('\n'))
-            shopping_list_dict = {}
-            for item in out:
-                shopping_list_dict[item]=False
-            new_shopping_list.contentjson = json.dumps(shopping_list_dict)
-            new_shoppinglist.owner = request.user.username
-            new_shoppinglist = form.save()
-            return redirect('myshoppinglists')
-        else:
-            return HttpResponse('Error')
-    else:
-        form = SimpleListForm()
-        return render(request, 'shoppinglist/createlist.html', {'form': form})
 
 @login_required(login_url='/login/')
 def myshoppinglists(request):
@@ -55,7 +36,6 @@ def myshoppinglists(request):
 def list_detail(request, pk):
     current_list = get_object_or_404(SimpleList, pk=pk)
     if request.method =='POST':
-        NumMatch = 0
         collect_keys=[]
         shopping_list = current_list.contents.split('\r\n')
         for key in request.POST:
@@ -64,7 +44,6 @@ def list_detail(request, pk):
             if key in shopping_list:
                 try:
                     shopping_list = [ x for x in shopping_list if x != key]
-                    NumMatch=NumMatch+1
                 except:
                     pass
         current_list.contents = '\r\n'.join(shopping_list)

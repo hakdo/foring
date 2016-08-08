@@ -18,7 +18,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$',views.init,name='init' ),
-    url(r'^new/$',views.createlistjson,name='createlist'),
+    url(r'^new/$',views.createlist,name='createlist'),
     url(r'^myshoppinglists/$',views.myshoppinglists,name='myshoppinglists'),
     url(r'^myshoppinglists/detail/(?P<pk>\d+)/$',views.list_detail,name='listdetail'),
     url(r'^login/$',views.userlogin,name='userlogin'),
