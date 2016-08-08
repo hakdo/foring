@@ -6,11 +6,13 @@ from django.utils import timezone
 
 class SimpleList(models.Model):
     shortname = models.CharField(max_length=200)
-    created_date = models.DateTimeField(default=timezone.now())
+    created_date = models.DateTimeField(default=timezone.now)
     owner = models.CharField(max_length=200,default='dummy')
     contents = models.TextField()
     finished = models.BooleanField(default=False)
-    contentjson = models.TextField(blank=True)
+    sharedwith = models.CharField(max_length=30, blank=True)
+    shareable = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return self.shortname
