@@ -48,7 +48,7 @@ def list_edit(request,pk):
 
 @login_required(login_url='/login/')
 def myshoppinglists(request):
-    shopping_lists = SimpleList.objects.filter(finished=False, owner=request.user.username)
+    shopping_lists = SimpleList.objects.filter(finished=False, owner=request.user.username).order_by('shortname')
     return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists, 'ownership': 'private'})
 
 @login_required(login_url='/login/')
