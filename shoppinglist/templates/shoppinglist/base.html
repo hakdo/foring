@@ -158,13 +158,17 @@ div.cookiesplain:hover {
 </div>
 <br />
 <footer class="container-fluid text-center">
-  {% if user.is_authenticated %}
-  <p>Ha en fin dag, {{ user.username }}!</p>
-  {% else %}
-  <p>Ha en fin dag!</p>
-  {% endif %}
+  <p>Del FORPLAN på sosiale medier - dette deler ikke listene dine!</p>
+<table class="table-condensed" style="margin: 0 auto !important; float: none !important;">
+<tr style="vertical-align:top"><td>
 <div class="fb-share-button" data-href="http://www.supersjefen.com" data-layout="button" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.supersjefen.com%2F&amp;src=sdkpreparse">Share</a></div>
-	</p>
+</td>
+<td>
+<div>
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="FORPLAN | Prøv enkle lister på nett du også - for PC og mobil. Gratis. " data-url="http://www.supersjefen.com" data-via="sjefersuper" data-hashtags="gtd" data-lang="no" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</td></tr></table>
+	
 </footer>
 <address>(c) 2016 by <a href="https://www.twitter.com/sjfersuper">@sjefersuper</a>.
 <div class="cookiesplain">
