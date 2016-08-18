@@ -60,24 +60,30 @@ def yourshoppinglists(request):
 def list_detail(request, pk):
     current_list = get_object_or_404(SimpleList, pk=pk)
     if request.method =='POST':
-        collect_keys=[]
-        shopping_list = current_list.contents.split('\r\n')
-        for key in request.POST:
-            collect_keys.append(''.join(key.split('\r\n')))
-        for key in collect_keys:
-            if key in shopping_list:
-                try:
-                    shopping_list = [ x for x in shopping_list if x != key]
-                except:
-                    pass
-        current_list.contents = '\r\n'.join(shopping_list)
-        if len(shopping_list)==0:
-            current_list.finished = True
-        current_list.save()
-        return redirect('myshoppinglists')
+        if current_list.owner == request.user.username or current_list.sharedwith == request.user.username:
+            collect_keys=[]
+            shopping_list = current_list.contents.split('\r\n')
+            for key in request.POST:
+                collect_keys.append(''.join(key.split('\r\n')))
+            for key in collect_keys:
+                if key in shopping_list:
+                    try:
+                        shopping_list = [ x for x in shopping_list if x != key]
+                    except:
+                        pass
+            current_list.contents = '\r\n'.join(shopping_list)
+            if len(shopping_list)==0:
+                current_list.finished = True
+            current_list.save()
+            return redirect('myshoppinglists')
+        else:
+            return HttpResponse('Wrong User - No Access')
     else:
-        list_items=current_list.contents.split('\n')
-        return render(request, 'shoppinglist/list_detail.html', {'list': current_list, 'items': list_items})
+        if current_list.owner == request.user.username or current_list.sharedwith == request.user.username:
+            list_items=current_list.contents.split('\n')
+            return render(request, 'shoppinglist/list_detail.html', {'list': current_list, 'items': list_items})
+        else:
+            return HttpResponse('Wrong User - No Access')
 
 def userlogin(request):
     if request.method == 'POST':
