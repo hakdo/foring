@@ -1,11 +1,152 @@
-{% extends 'shoppinglist/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Forplan | Effektive huskelister for  planlegging i hverdagen</title>
+  <meta name="description" content="Gratis webapp for alle typer huskelister og handlelister. Enkelt og raskt å bruke på mobil, PC og nettbrett.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-{% block content %}
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .list_item {
+      font-size: 1.7em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-bottom: 50px;
+      padding-top: 25px;
+    }
+    .bigbox {
+      zoom:1.5;
+      transform:scale(1.5);
+      -ms-transform:scale(1.5);
+      -webkit-transform:scale(1.5);
+      -o-transform:scale(1.5);
+      -moz-transform:scale(1.5);
+      transform-origin:0 0;
+      -ms-transform-origin:0 0;
+      -webkit-transform-origin:0 0;
+      -o-transform-origin:0 0;
+      -moz-transform-origin:0 0;
+      -webkit-transform-origin:0 0;
+      float:right;
+    }
+
+
+    .navbar {
+      margin-bottom: 100;
+      border-radius: 100;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+  div.cookiesplain {
+	lineheight: 20px;
+	border-radius: 10px;
+	width: 90px;
+	height: 20px;
+	transition: width 0.8s;
+	position: relative;
+	-moz-transition: width 0.2s; /* Firefox 4 */
+    	-webkit-transition: width 0.2s; /* Safari and Chrome */
+    	-o-transition: width 0.2s; /* Opera */
+    	-ms-transition: width 0.2s; /* IE9 (maybe) */
+	overflow: hidden;
+}
+
+div.cookiesplain:hover {
+	width: 1000px;
+	height: 20px;
+	lineheight: 20px;
+}
+</style>
 	<meta property="og:url"           content="{{ request.get_full_path }}?fbrefresh=CAN_BE_ANYTHING" />
 	<meta property="og:type"          content="article" />
 	<meta property="og:title"         content="Effektive huskelister" />
 	<meta property="og:description"   content="En delt liste" />
+	<meta property="og:locale" content="nb_NO" />
 	<!--meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /-->
+
+</head>
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">FORPLAN</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li {% ifequal request.path "/" %}class="active"{% endifequal %}><a href="{%url 'init' %}">Intro</a></li>
+        <li {% ifequal request.path "/new/" %}class="active"{% endifequal %}><a href="{% url 'createlist' %}">Ny liste</a></li>
+        <li {% ifequal request.path "/myshoppinglists/" %}class="active"{% endifequal %}><a href="{% url 'myshoppinglists' %}">Mine lister</a></li>
+        <li {% ifequal request.path "/yourshoppinglists/" %}class="active"{% endifequal %}><a href="{% url 'yourshoppinglists' %}">Delt med meg</a></li>
+        <li {% ifequal request.path "/qa/" %}class="active"{% endifequal %}><a href="{% url 'qa' %}">Q&ampA</a></li>
+                {% if not user.is_authenticated %}
+        <li {% ifequal request.path "/registernew/" %}class="active"{% endifequal %}><a href="{% url 'newuser' %}">Opprett ny bruker</a></li>
+        {% endif %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+        <li>
+          <a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        {% else %}
+        <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container text-center">
+  <div class="row content">
+    <!--div class="col-sm-2 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div-->
+<div class="col-sm-8 text-left">
+
 <h1> {{ list.shortname }}
 {% ifequal user.username list.owner %}
 <a class="btn btn-default" style="float:right;" href="{% url 'list_edit' pk=list.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -52,5 +193,36 @@ Dersom du har krysset av for alle varene vil listen fjernes fra oversikten.</p>
   Du kan lese denne listen, men du kan ikke gjøre endringer i den.
 </p>
 {% endifnotequal %}
+<!--div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div-->
+  </div>
+</div>
+<br />
+<footer class="container-fluid text-center">
+  <p>Del FORPLAN på sosiale medier - dette deler ikke listene dine!</p>
+<table class="table-condensed" style="margin: 0 auto !important; float: none !important;">
+<tr style="vertical-align:top"><td>
+<div class="fb-share-button" data-href="http://www.supersjefen.com" data-layout="button" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.supersjefen.com%2F&amp;src=sdkpreparse">Share</a></div>
+</td>
+<td>
+<div>
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="FORPLAN | Prøv enkle lister med #forplan - for PC og mobil. Gratis. " data-url="http://www.supersjefen.com/registernew" data-via="sjefersuper" data-hashtags="gtd" data-lang="no" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</td></tr></table>
 
-{% endblock %}
+</footer>
+<address>(c) 2016 by <a href="https://www.twitter.com/sjefersuper">@sjefersuper</a>.
+<div class="cookiesplain">
+Cookie Policy: Denne siden bruker cookies for å holde styr på innloggingen din. Vi bruker anonymiserte data i Google analytics, se egne betingelser hos Google for dette.
+</div>
+</address>
+</body>
+</html>
+
+
