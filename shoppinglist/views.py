@@ -67,7 +67,7 @@ def yourshoppinglists(request):
     shopping_lists = SimpleList.objects.filter(finished=False, sharedwith=request.user.username)
     return render(request, 'shoppinglist/my_shopping_lists.html', {'lists': shopping_lists, 'ownership': 'shared'})
 
-#@login_required(login_url='/login/')
+
 def list_detail(request, pk):
     current_list = get_object_or_404(SimpleList, pk=pk)
     if not request.user.is_authenticated():
