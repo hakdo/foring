@@ -1,7 +1,11 @@
 {% extends 'shoppinglist/base.html' %}
 
 {% block content %}
-
+	<meta property="og:url"           content="{{ request.get_full_path }}?fbrefresh=CAN_BE_ANYTHING" />
+	<meta property="og:type"          content="article" />
+	<meta property="og:title"         content="Effektive huskelister" />
+	<meta property="og:description"   content="En delt liste" />
+	<!--meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /-->
 <h1> {{ list.shortname }}
 {% ifequal user.username list.owner %}
 <a class="btn btn-default" style="float:right;" href="{% url 'list_edit' pk=list.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -11,7 +15,7 @@
 {% ifequal list.sharedwith 'public' %}
 <p style="font-size:0.8em"> Denne listen er offentlig.</p>
 
-<div class="fb-share-button" data-href="{{ request.get_full_path }}" data-layout="icon_link" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.get_full_path }};src=sdkpreparse">Del på Facebook</a></div>
+<div class="fb-share-button" data-href="{{ request.get_full_path }}" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.get_full_path }};src=sdkpreparse">Del på Facebook</a></div>
 
 {% endifequal %}
 
