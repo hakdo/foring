@@ -1,7 +1,11 @@
 {% extends 'shoppinglist/base.html' %}
 
 {% block content %}
-
+	<meta property="og:url"           content="{{ request.get_full_path }}" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="FORPLAN - Delt Liste - {{ list.shortname }}" />
+	<meta property="og:description"   content="Forplan - enkle lister til all slags bruk" />
+	<!--meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /-->
 <h1> {{ list.shortname }}
 {% ifequal user.username list.owner %}
 <a class="btn btn-default" style="float:right;" href="{% url 'list_edit' pk=list.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
