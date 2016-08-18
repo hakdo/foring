@@ -3,9 +3,15 @@
 {% block content %}
 
 <h1> {{ list.shortname }}
+{% ifequal user.username list.owner %}
 <a class="btn btn-default" style="float:right;" href="{% url 'list_edit' pk=list.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+{% endifequal %}
 </h1>
-<p style="font-size:0.8em"> {{ list.created_date|date:'d. b. Y' }}</p>
+<p style="font-size:0.8em"> {{ list.created_date|date:'d. b. Y' }} | {{ list.owner }}</p>
+{% ifequal list.sharedwith 'public' %}
+<p style="font-size:0.8em"> Denne listen er offentlig.
+</p>
+{% endifequal %}
 
 <ul class="list-group">
 <form method="POST">{% csrf_token %}
@@ -16,6 +22,7 @@
 {% endfor %}
 
 </ul>
+{% ifequal user.username list.owner %}
 <div class="btn-group btn-group-justified" role="group">
 <div class="btn-group" role="group">
 <a class="btn btn-default" role="button"  href="{% url 'myshoppinglists' %}" >
@@ -24,13 +31,20 @@
 </div>
 <div class="btn-group" role="group">
   <button type="submit" class="btn btn-default" value="archive">Lagre endringer</button>
+</div>
+</div>
+
 </form>
-</div>
-</div>
 <br />
 <p>Kryss av for varer du har kjøpt. Om du trykker "Forkast endringer" lagres listen uten at noen
 varer tas bort. Om du trykker "Lagre endringer" fjernes de varene du har krysset av for fra listen din.
 Dersom du har krysset av for alle varene vil listen fjernes fra oversikten.</p>
+{% endifequal %}
 
+{% ifnotequal user.username list.owner %}
+<p>Dette er en liste som enten er delt med deg eller er offentlig.
+  Du kan lese denne listen, men du kan ikke gjøre endringer i den.
+</p>
+{% endifnotequal %}
 
 {% endblock %}
