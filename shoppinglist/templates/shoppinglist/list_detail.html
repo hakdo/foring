@@ -156,7 +156,7 @@ div.cookiesplain:hover {
 {% ifequal list.sharedwith 'public' %}
 <p style="font-size:0.8em"> Denne listen er offentlig.</p>
 
-<div class="fb-share-button" data-href="{{ request.get_full_path }}" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.get_full_path }};src=sdkpreparse">Del på Facebook</a></div>
+<div class="fb-share-button" data-href="http://www.supersjefen.com{{ request.get_full_path }}" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.supersjefen.com{{ request.get_full_path }};src=sdkpreparse">Del på Facebook</a></div>
 
 {% endifequal %}
 
